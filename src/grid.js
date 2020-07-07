@@ -73,7 +73,7 @@ export default class Grid extends React.Component{
     clickCell(x, y) {
         //set alive depending on prev. state
         let theGrid = this.state.theGrid;
-        let nextGrid = this.state.nextGrid;
+        let nextGrid = this.state.theGrid
 
         // console.log(x, y, theGrid[x][y])
         if(theGrid[x][y] === 0) {
@@ -92,6 +92,7 @@ export default class Grid extends React.Component{
 
         this.setState({
             theGrid: nextGrid,
+            nextGrid: nextGrid,
             gridToRender: reactGrid
         })
     }
