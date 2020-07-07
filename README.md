@@ -1,3 +1,16 @@
+# Conways game of life in react
+
+Game rules: <br/>
+- If a dead cell has exactly three live neighbours, it comes to life
+- If a live cell has less than two live neighbours, it dies
+- If a live cell has more than three live neighbours, it dies
+- If a live cell has two or three live neighbours, it continues living
+
+Some of the code basics are from here:<br />
+[http://disruptive-communications.com/conwaylifejavascript/](http://disruptive-communications.com/conwaylifejavascript/)
+
+
+## CRA Readme
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
