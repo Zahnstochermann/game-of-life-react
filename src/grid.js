@@ -5,15 +5,15 @@ export default class Grid extends React.Component{
     constructor(props) {
         super(props);
         this.state= {
-            xSize: 20,
-            ySize: 20,
+            xSize: 50,
+            ySize: 50,
             steps: 0,
-            speed: 150,
+            speed: 100,
             gameStarted: false,
             theGrid: [],
             nextGrid: [],
         }
-        this.updateGrid = this.updateGrid.bind(this);
+        // this.updateGrid = this.updateGrid.bind(this);
         this.clickCell = this.clickCell.bind(this);
     }
 
@@ -36,11 +36,10 @@ export default class Grid extends React.Component{
     setupGame(randomGame) {
         //randomGame can be true or false, if true: random game
         let theGrid = this.createArray(this.state.xSize);
-        let nextGrid = this.createArray(this.state.xSize);
         let reactGrid = this.createArray(this.state.xSize);
         
-        for(let j=1; j <= this.state.xSize -1 ; j++) { 
-            for(let k=1; k <= this.state.ySize -1 ; k++) { 
+        for(let j=0; j <= this.state.xSize; j++) { 
+            for(let k=0; k <= this.state.ySize; k++) { 
                 let alive = 0;
                 if(randomGame) {
                     alive = Math.round(Math.random());
@@ -49,9 +48,8 @@ export default class Grid extends React.Component{
             }
         }
 
-
-        for(let j=1; j <= this.state.xSize -1 ; j++) { 
-            for(let k=1; k <= this.state.ySize -1 ; k++) { 
+        for(let j=0; j <= this.state.xSize; j++) { 
+            for(let k=0; k <= this.state.ySize; k++) { 
                 reactGrid[j][k] = <Cell x={j} y={k} key={j+"x"+k+"y"} alive={theGrid[j][k]} clickFunction={this.clickCell}/>
             }
         }
@@ -62,9 +60,18 @@ export default class Grid extends React.Component{
         })
     }
 
+    createEmptyGrid() {
+        let theGrid = this.createArray(this.state.xSize);
+        for(let j=0; j <= this.state.xSize; j++) { 
+            for(let k=0; k <= this.state.ySize; k++) { 
+                theGrid[j][k] = 0;
+            }
+        }
+        return(theGrid)
+    }
+
     clickCell(x, y) {
         //set alive depending on prev. state
-        //probably deepcopy needed
         let theGrid = this.state.theGrid;
         let nextGrid = this.state.nextGrid;
 
@@ -74,19 +81,17 @@ export default class Grid extends React.Component{
         } else {
             nextGrid[x][y] = 0;
         }
-        // console.log(x, y, theGrid[x][y])
         
         //prepare react objects
         let reactGrid = this.createArray(this.state.xSize);
-        for(let j=1; j <= this.state.xSize -1 ; j++) { 
-            for(let k=1; k <= this.state.ySize -1 ; k++) { 
+        for(let j=0; j <= this.state.xSize; j++) { 
+            for(let k=0; k <= this.state.ySize; k++) { 
                 reactGrid[j][k] = <Cell x={j} y={k} key={j+"x"+k+"y"} alive={nextGrid[j][k]} clickFunction={this.clickCell}/>
             }
         }
 
         this.setState({
             theGrid: nextGrid,
-            nextGrid: theGrid,
             gridToRender: reactGrid
         })
     }
@@ -100,7 +105,7 @@ export default class Grid extends React.Component{
 
     updateGrid() {
         let theGrid = this.state.theGrid;
-        let nextGrid = this.state.nextGrid;
+        let nextGrid = this.createEmptyGrid();
         let reactGrid = this.createArray(this.state.xSize);
 
         for(let j=0; j <= this.state.xSize; j++) { 
@@ -120,7 +125,7 @@ export default class Grid extends React.Component{
                     totalCells += theGrid[j][k - 1]; //middle left
                 }
                 if(j >= 0 && k + 1 <= this.state.ySize) {
-	                totalCells += theGrid[j][k + 1]; //middle right
+                    totalCells += theGrid[j][k + 1]; //middle right
                 }
                 if(j+1 <= this.state.xSize && k-1 >= 0) { 
                     totalCells += theGrid[j + 1][k - 1]; //bottom left
@@ -131,13 +136,6 @@ export default class Grid extends React.Component{
                 if(j+1 <= this.state.xSize && k+1 <= this.state.ySize) { 
                     totalCells += theGrid[j + 1][k + 1]; //bottom right
                 }
-
-                //apply the rules to each cell
-                // Any live cell with two live neighbours survives.
-                // if(j == 1 && k == 1) {
-                //     console.log(theGrid[2][2]);
-                //     console.log(totalCells)
-                // }
 
 	            switch (totalCells) {
 	                case 2:
@@ -157,8 +155,8 @@ export default class Grid extends React.Component{
         } 
 
 
-        for(let j=1; j <= this.state.xSize -1 ; j++) { 
-            for(let k=1; k <= this.state.ySize -1 ; k++) { 
+        for(let j=0; j <= this.state.xSize ; j++) { 
+            for(let k=0; k <= this.state.ySize ; k++) { 
                 reactGrid[j][k] = <Cell x={j} y={k} key={j+"x"+k+"y"} alive={nextGrid[j][k]} clickFunction={this.clickCell}/>
             }
         }        
@@ -166,7 +164,7 @@ export default class Grid extends React.Component{
         // swap grids and render
         this.setState({
             theGrid: nextGrid,
-            nextGrid: theGrid,
+            nextGrid: this.createEmptyGrid(),
             gridToRender: reactGrid            
         })
     }

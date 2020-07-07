@@ -18,11 +18,11 @@ code {
 }
 
 .cell {
-  width:24px;
-  height: 24px;
+  width:12px;
+  height: 12px;
   border:1px solid grey;
   position: absolute;
-  /* transition: background-color 800ms linear; */
+  /* transition: background-color 200ms linear; */
 }
 
 .cell--dead {
