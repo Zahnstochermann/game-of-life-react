@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.grid {
+  position: relative;
+  margin-top: 20px;
+}
+
+.cell {
+  width:24px;
+  height: 24px;
+  border:1px solid grey;
+  position: absolute;
+  /* transition: background-color 800ms linear; */
+}
+
+.cell--dead {
+  background-color: white;
+}
+.cell--alive {
+  background-color: black;
+}
