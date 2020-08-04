@@ -13,15 +13,10 @@ export default class Grid extends React.Component{
             theGrid: [],
             nextGrid: [],
         }
-        // this.updateGrid = this.updateGrid.bind(this);
         this.clickCell = this.clickCell.bind(this);
     }
 
     componentDidMount(){
-        // this.setState({
-        //     theGrid: this.createArray(this.state.xSize),
-        //     nextGrid: this.createArray(this.state.xSize)
-        // })
         this.setupGame(false)
     }
 
@@ -75,7 +70,6 @@ export default class Grid extends React.Component{
         let theGrid = this.state.theGrid;
         let nextGrid = this.state.theGrid
 
-        // console.log(x, y, theGrid[x][y])
         if(theGrid[x][y] === 0) {
             nextGrid[x][y] = 1;
         } else {
@@ -185,9 +179,6 @@ export default class Grid extends React.Component{
                 <button onClick={() => setInterval(this.nextTick.bind(this), this.state.speed)}>
                     LOOP
                 </button>
-                {/* <button onClick={() => window.clearInterval()}>
-                    STOP
-                </button> */}
                 <div className="grid">
                     {this.state.gridToRender}
                 </div>
